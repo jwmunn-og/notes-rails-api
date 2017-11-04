@@ -31,4 +31,21 @@ RSpec.describe TagsController, type: :controller do
       expect(json['errors']['name'][0]).to eq("can't be blank")
     end
   end
+
+  describe "tags#destroy action" do
+    before do
+      note = FactoryBot.create(:note)
+      @tag = FactoryBot.create(:tag, note_id: note.id)
+      delete :destroy, params: { id: @tag.id }
+    end
+
+    it "should return 200 status-code" do
+      expect(response).to be_success
+    end
+
+    it "should be removed from the database" do
+      deleted_tag = Tag.find_by_id(@tag.id)
+      expect(deleted_tag).to eq nil
+    end
+  end
 end
