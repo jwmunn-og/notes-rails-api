@@ -40,6 +40,6 @@ class NotesController < ApplicationController
   end
 
   def render_errors(note)
-    { errors: note.errors }
+    { errors: note.errors } 
   end
 end
